@@ -25,3 +25,23 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+CASE 
+      WHEN start_time BETWEEN CAST('08:00:00' AS time) AND CAST('18:00:00' AS time) 
+      AND end_time BETWEEN CAST('08:00:00' AS time) AND CAST('18:00:00' AS time) THEN DATEDIFF(MINUTE, start_time, end_time)
+      WHEN start_time BETWEEN CAST('08:00:00' AS time) AND CAST('18:00:00' AS time) 
+      AND end_time NOT BETWEEN CAST('08:00:00' AS time) AND CAST('18:00:00' AS time) THEN DATEDIFF(MINUTE, start_time, CAST('18:00:00' AS timestamp))
+      WHEN start_time NOT BETWEEN CAST('08:00:00' AS time) AND CAST('18:00:00' AS time) 
+      AND end_time BETWEEN CAST('08:00:00' AS time) AND CAST('18:00:00' AS time) THEN DATEDIFF(MINUTE, CAST('08:00:00' AS timestamp), end_time)
+      ELSE 0
+    END AS day_minutes,
+    DATEDIFF(MINUTE, start_time, end_time) - 
+    CASE 
+      WHEN start_time BETWEEN CAST('08:00:00' AS time) AND CAST('18:00:00' AS time) 
+      AND end_time BETWEEN CAST('08:00:00' AS time) AND CAST('18:00:00' AS time) THEN DATEDIFF(MINUTE, start_time, end_time)
+      WHEN start_time BETWEEN CAST('08:00:00' AS time) AND CAST('18:00:00' AS time) 
+      AND end_time NOT BETWEEN CAST('08:00:00' AS time) AND CAST('18:00:00' AS time) THEN DATEDIFF(MINUTE, start_time, CAST('18:00:00' AS timestamp))
+      WHEN start_time NOT BETWEEN CAST('08:00:00' AS time) AND CAST('18:00:00' AS time) 
+      AND end_time BETWEEN CAST('08:00:00' AS time) AND CAST('18:00:00' AS time) THEN DATEDIFF(MINUTE, CAST('08:00:00' AS timestamp), end_time)
+      ELSE 0
+    END AS night_minutes
